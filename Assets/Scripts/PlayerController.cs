@@ -1,0 +1,57 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class PlayerController : MonoBehaviour
+
+
+{
+    private Rigidbody rb; 
+    private float movementX;
+    private float movementY;
+    
+    public float speed = 0; 
+    public float jumpForce = 5f;
+
+    private bool isGrounded = true;
+    // Start is called before the first frame update
+    void Start()
+    {
+        rb = GetComponent <Rigidbody>();
+    }
+     void OnMove (InputValue movementValue)
+   {
+     Vector2 movementVector = movementValue.Get<Vector2>(); 
+     movementX = movementVector.x; 
+    movementY = movementVector.y; 
+    
+   }
+
+    private void FixedUpdate() 
+   {
+    Vector3 movement = new Vector3 (movementX, 0.0f, movementY);
+    rb.AddForce(movement * speed); 
+   }
+
+    private void OnJump()
+    {
+        
+        if (isGrounded)
+        {
+            Vector3 movement = new Vector3 (0, jumpForce,0);
+            rb.AddForce(movement); 
+            isGrounded = false;
+        }
+        
+        
+        
+    }   
+    private void OnCollisionEnter(Collision collision)
+    {
+        // Considerar o personagem como estando no chão se ele colidir com ele
+        isGrounded = true;
+    }
+ 
+ 
+}
