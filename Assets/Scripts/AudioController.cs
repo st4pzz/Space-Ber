@@ -4,46 +4,48 @@ using UnityEngine;
 
 public class AudioController : MonoBehaviour
 {
+    public AudioSource musicSource;
+    public AudioSource sfxSource;
 
-    public AudioSource music;
-    public AudioSource sfx;
     public AudioClip musicClip;
     public AudioClip sfxClip_timer;
     public AudioClip sfxClip_win;
-
     public float startAt = 10f; 
-    public float duration = 50f; 
+    public float duration = 5f; 
+
     void Start()
     {
+
         PlayMusicPart(startAt, duration);
     }
+
     void PlayMusicPart(float start, float duration)
     {
-        if(music != null)
-        {
-            music.clip = musicClip;
-            music.time = start; 
-            music.Play(); 
+        if(musicSource != null)
+        {   
+            musicSource.clip = musicClip;
+            musicSource.time = start; 
+            musicSource.Play(); 
             Invoke("StopMusic", duration); 
         }
     }
+
     void StopMusic()
     {
-        if(music.isPlaying)
+        if(musicSource.isPlaying)
         {
-            music.Stop(); 
+            musicSource.Stop(); 
         }
     }
-
-    public void PlaySFX_Timer()
+    void PlaySFX_Timer()
     {
-        sfx.clip = sfxClip_timer;
-        sfx.Play();
+        sfxSource.clip = sfxClip_timer;
+        sfxSource.Play();
     }
 
-    public void PlaySFX_Win()
+    void PlaySFX_Win()
     {
-        sfx.clip = sfxClip_win;
-        sfx.Play();
+        sfxSource.clip = sfxClip_win;
+        sfxSource.Play();
     }
 }
