@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     private float movementX;
     private float movementY;
 
+    private AudioController audioController;
+
     public float speed = 0;
     public float jumpForce = 0;
 
@@ -23,6 +25,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         timer = 10.0f;
         SetTimerText();
+        audioController = FindObjectOfType<AudioController>();
     }
 
     void Update()
@@ -74,7 +77,7 @@ public class PlayerController : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Timer"))
         {
-            
+            audioController.PlaySFX_Timer();
             timer = timer + 10.0f;
             SetTimerText();
             Destroy(collision.gameObject);
@@ -82,6 +85,7 @@ public class PlayerController : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Finish"))
         {
+            audioController.PlaySFX_Win();
             SceneManager.LoadScene("ganhou");
             
         }
