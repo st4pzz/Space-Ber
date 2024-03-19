@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,7 +13,6 @@ public class PlayerController : MonoBehaviour
     private float movementX;
     private float movementY;
 
-    public Transform cameraTransform; // Adiciona uma referência à câmera
     public float speed = 0;
     public float jumpForce = 0;
 
@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        timer = 20.0f;
+        timer = 10.0f;
         SetTimerText();
     }
 
@@ -30,14 +30,14 @@ public class PlayerController : MonoBehaviour
         timer -= Time.deltaTime;
         if (timer <= 0)
         {
-            Debug.Log("Game Over");
+            SceneManager.LoadScene("dead_scene");
         }
         SetTimerText();
     }
 
     void SetTimerText()
     {
-        timerText.text = "Time: " + Mathf.Max(0, Mathf.Ceil(timer)).ToString(); // Arredonda o tempo para cima e não mostra valores negativos
+        timerText.text = "Time: " + Mathf.Max(0, Mathf.Ceil(timer)).ToString();
     }
 
     void OnMove(InputValue movementValue)
@@ -50,20 +50,14 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         Vector3 movementDirection = new Vector3(movementX, 0.0f, movementY).normalized;
-        Vector3 cameraForward = cameraTransform.forward;
-        cameraForward.y = 0; // Ignora a inclinação para cima/baixo da câmera ao calcular o movimento
-        Vector3 cameraRight = cameraTransform.right;
-        
-        Vector3 moveDirection = (cameraForward * movementY + cameraRight * movementX).normalized;
-
-        rb.AddForce(moveDirection * speed);
+        rb.AddForce(movementDirection * speed);
     }
 
     private void OnJump()
     {
         if (isGrounded)
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); // Usa ForceMode.Impulse para um pulo mais instantâneo
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); 
             isGrounded = false;
         }
     }
@@ -74,13 +68,22 @@ public class PlayerController : MonoBehaviour
         {
             isGrounded = true;
         }
-        if (collision.gameObject.CompareTag("Obstacle"))
+        if (collision.gameObject.CompareTag("Obstacule"))
         {
-            Debug.Log("Game Over");
+            SceneManager.LoadScene("dead_scene");
         }
         if (collision.gameObject.CompareTag("Timer"))
         {
-            timer += 10.0f;
+            
+            timer = timer + 10.0f;
+            SetTimerText();
+            Destroy(collision.gameObject);
+            
+        }
+        if (collision.gameObject.CompareTag("Finish"))
+        {
+            SceneManager.LoadScene("ganhou");
+            
         }
     }
 }

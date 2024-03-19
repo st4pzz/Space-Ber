@@ -6,6 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/menu.unity
+    guid: 9c7893134a4e24bc1854a74d8a0b7bcc
+  - enabled: 1
+    path: Assets/Scenes/Space Ber.unity
+    guid: 62ff25bb5a50c4cff8df824527e6ea71
+  - enabled: 1
+    path: Assets/Scenes/dead_scene.unity
+    guid: bc603f6b7c958410a99e99e39a973504
+  - enabled: 1
+    path: Assets/Scenes/ganhou.unity
+    guid: 3d3f298c0a4514b9181e0db611732586
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects: {}
