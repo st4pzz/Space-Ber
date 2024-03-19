@@ -61,8 +61,7 @@ public class PlayerController : MonoBehaviour
         if (isGrounded)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); 
-            isGrounded = false;
-        }
+            }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -90,4 +89,11 @@ public class PlayerController : MonoBehaviour
             
         }
     }
+    private void OnCollisionExit(Collision collision){
+            if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false;
+        }
+    }
+
 }
