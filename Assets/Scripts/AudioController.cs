@@ -37,13 +37,13 @@ public class AudioController : MonoBehaviour
             musicSource.Stop(); 
         }
     }
-    void PlaySFX_Timer()
+    public void PlaySFX_Timer()
     {
         sfxSource.clip = sfxClip_timer;
         sfxSource.Play();
     }
 
-    void PlaySFX_Win()
+    public void PlaySFX_Win()
     {
         sfxSource.clip = sfxClip_win;
         sfxSource.Play();
